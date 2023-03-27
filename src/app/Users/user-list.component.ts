@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { UserServiceService } from "../services/user-service.service";
 import { IUser } from "./user";
@@ -48,12 +48,23 @@ constructor(private userService: UserServiceService,
   }
   ngOnInit(): void {
     this.employeeForm = this.fb.group({
-      name : this.fb.control(''),
-      email: this.fb.control(''),
-      location : this.fb.control(''),
+      name : this.fb.control('' ,
+      [Validators.required ,
+       Validators.minLength(4),
+       Validators.pattern("[a-zA-Z].*")]
+      ),
+      email: this.fb.control('',
+      [Validators.required ,
+       Validators.email]
+      ),
+      location : this.fb.control('default'),
       position: this.fb.control(''),
-      gender: this.fb.control(''),
-      pwd: this.fb.control(''),
+      gender: this.fb.control('' , [Validators.required]),
+      pwd: this.fb.control('',
+      [Validators.required ,
+      Validators.minLength(6),
+      Validators.maxLength(15)]
+      ),
       rpwd: this.fb.control(''),
       skill : this.fb.control('')
     })
@@ -86,6 +97,7 @@ addUser(){
     password : this.Password.value,
     skillId : this.Skill.value
   }
+  console.log(this.employeeForm.get('name'));
   this.userService.addUser(user).subscribe(
     res => {
       this.users.push(res);

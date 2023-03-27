@@ -10,7 +10,7 @@ import { IUser } from './user';
 })
 export class UserDetailsComponent implements OnInit{
   pageTitle: string = 'User details';
-  user : IUser | undefined;
+  user? : IUser;
 
   locationOptions =[
     'Banglore',
@@ -27,9 +27,10 @@ export class UserDetailsComponent implements OnInit{
       email : new FormControl(""),
       gender : new FormControl(""),
       position : new FormControl(""),
-      location : new FormControl(""),
+      location : new FormControl("default"),
       pwd : new FormControl(""),
-      rpwd : new FormControl("")
+      rpwd : new FormControl(""),
+      skill : new FormControl("")
   
      })
 
@@ -54,16 +55,17 @@ export class UserDetailsComponent implements OnInit{
   }
 
   updateUser(id :any){
-    //let user = this.getUser(id)
-    let user : IUser = {
-      name : this.EmpName.value,
-      email: this.Email.value,
-      location : this.locationOptions[parseInt(this.Location.value)],
-      position : this.Position.value,
-      gender : this.Gender.value,
-      password : this.Password.value
-    }
-    this.getForm(user);
+    let user = this.getUser(id)
+    // let user : any = {
+    //   name : this.EmpName.value,
+    //   email: this.Email.value,
+    //   location : this.locationOptions[parseInt(this.Location.value)],
+    //   position : this.Position.value,
+    //   gender : this.Gender.value,
+    //   password : this.Password.value,
+    //   skill : this.Skill.value
+    // }
+    this.setForm(user);
     this.userService.updateUser(id, user).subscribe(
       res => {
         this.user = res;
@@ -75,13 +77,14 @@ export class UserDetailsComponent implements OnInit{
 
   }
 
-  getForm(user : any){
+  setForm(user : any){
     this.EmpName.setValue(user.name);
     this.Email.setValue(user.email);
     this.Location.setValue(user.location);
     this.Position.setValue(user.position);
     this.Gender.setValue(user.gender);
     this.Password.setValue(user.password);
+    this.Skill.setValue(user.skillId);
 
   }
 
@@ -105,6 +108,9 @@ export class UserDetailsComponent implements OnInit{
    }
    public get RPassword():FormControl{
     return this.userForm.get('rpwd') as FormControl;
+   }
+   public get Skill(): FormControl{
+    return this.userForm.get('skill') as FormControl;
    }
   
 

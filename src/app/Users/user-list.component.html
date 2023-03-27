@@ -69,6 +69,14 @@
                 <div class="row mt-3">
                     <div class="col">
                         <input type="text" class="form-control" placeholder="name" formControlName = 'name'>
+                        <div class="form-text text-danger" *ngIf="EmpName.errors?.['required'] &&
+                        EmpName.touched" >
+                            name is require!
+                        </div>
+                        <div class="form-text text-danger" *ngIf="EmpName.errors?.['pattern'] &&
+                        EmpName.touched" >
+                            name should start with Alphabet!
+                        </div>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -89,6 +97,9 @@
                                     <label class="form-check-label" for="female">Female</label>
                                   </div>
                             </div>
+                            <div class="form-text text-danger" *ngIf="Gender.errors?.['required']">
+                            Select the Gender!
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -96,6 +107,14 @@
                     <h6 class="text-secondary">Email</h6>
                     <input type="text" class="form-control" placeholder="email" 
                     formControlName = 'email'>
+                    <div class="form-text text-danger" *ngIf="Email.errors?.['email'] &&
+                        Email.touched" >
+                            Invalid email!
+                        </div>
+                        <div class="form-text text-danger" *ngIf="Email.errors?.['required'] &&
+                        Email.touched" >
+                            email required!
+                        </div>
                    
                 </div>
                 <div class="row mt-3">
@@ -117,6 +136,15 @@
                     <div class="col">
                         <h6 class="text-secondary">Confirm Password</h6>
                         <input type="text" class="form-control" placeholder=" Confirm Password" formControlName = 'rpwd'>
+                    </div>
+
+                    <div class="form-text text-danger" *ngIf="Password.errors?.['required'] &&
+                        Password.touched" >
+                            Password required!
+                    </div>
+                    <div class="form-text text-danger" *ngIf="(Password.errors?.['minLength']  || Password.errors?.['maxLength']) &&
+                    Password.touched" >
+                            Password should be at least 6 and at the max 15 character long!
                     </div>
                 </div>
                 <div class="row mt-3">
