@@ -3,7 +3,7 @@
     <div class="card-header">
         {{pageTitle}}
     </div>
-    <div class="card-body" *ngIf="user" >
+    <div class="card-body" >
         <div class="row">
         <div class="col-md-6">
             <img src="assets/default-avatar.jpg">
@@ -18,27 +18,27 @@
                 <tbody>
                     <tr>
                         <td>Employee Id : </td>
-                        <td>{{user.id}}</td>
+                        <td>{{userDetails.id}}</td>
                     </tr>
                     <tr>
                         <td>Employee Name : </td>
-                        <td>{{user.name}}</td>
+                        <td>{{userDetails.name}}</td>
                     </tr>
                     <tr>
                         <td> Email : </td>
-                        <td>{{user.email}}</td>
+                        <td>{{userDetails.email}}</td>
                     </tr>
                     <tr>
                         <td> Location : </td>
-                        <td>{{user.location}}</td>
+                        <td>{{userDetails.location}}</td>
                     </tr>
                     <tr>
                         <td> Position : </td>
-                        <td>{{user.position}}</td>
+                        <td>{{userDetails.position}}</td>
                     </tr>
                     <tr>
                         <td> Gender : </td>
-                        <td>{{user.gender}}</td>
+                        <td>{{userDetails.gender}}</td>
                     </tr>
                     
                     
@@ -50,27 +50,27 @@
             </div>
 
             <div class="row mt-6">
-                <form [formGroup]="userForm">
+                <form  #form="ngForm" (ngSubmit)="updateUser()">
                     <h6 class="text-secondary fst-italic mt-6">Personal Information</h6>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <h6 class="text-secondary fst-italic mt-6">Name</h6>
-                            <input type="text" class="form-control" placeholder="name" formControlName="name">
+                            <input type="text" class="form-control" placeholder="name" name="name" id="name" [(ngModel)]="userDetails.name">
                         </div>
                         <div class="col-md-6">
                             <h6 class="text-secondary fst-italic mt-6">Gender</h6>
-                            <input type="text" class="form-control" placeholder="gender" formControlName="gender" value={{user.gender}}>
+                            <input type="text" class="form-control" id ="gender" placeholder="gender" name="gender" [(ngModel)]="userDetails.gender">
                         </div>
                         
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <h6 class="text-secondary fst-italic mt-6">Position</h6>
-                            <input type="text" class="form-control" placeholder="position" formControlName="position" value={{user.position}}>
+                            <input type="text" class="form-control" placeholder="position" name="position" id="position" [(ngModel)]="userDetails.position">
                         </div>
                         <div class="col-md-6">
                             <h6 class="text-secondary">Location</h6>
-                        <select  class="form-select" formControlName="location">
+                        <select  class="form-select" name="location" id="location" [(ngModel)]="userDetails.location">
                             <option value="default" selected>Select your Location</option>
                             <option *ngFor="let option of locationOptions; let i = index;" value="{{i}}">
                                  {{option | titlecase}}
@@ -80,18 +80,19 @@
                         <div class="row mt-3" >
                             <div class="col">
                                 <h6 class="text-secondary">Password</h6>
-                                <input type="text" class="form-control" placeholder=" Password" formControlName="pwd" value={{user.password}}>
+                                <input type="text" class="form-control" placeholder=" Password" name="password" id="password" [(ngModel)]="userDetails.password">
                             </div>
                             <div class="col">
                                 <h6 class="text-secondary">Confirm Password</h6>
-                                <input type="text" class="form-control" placeholder=" Confirm Password" formControlName="rpwd">
+                                <input type="text" class="form-control" placeholder=" Confirm Password">
                             </div>
                             <div class="col">
                                 <h6 class="text-secondary">Skill Id</h6>
-                                <input type="text" class="form-control" placeholder=" skill" formControlName="skill">
+                                <input type="text" class="form-control" placeholder=" skill" name="skillId" id="skillId" [(ngModel)]="userDetails.skillId">
                             </div>
                         </div>
                     </div>
+                    
                 
                 </form>
             </div>
@@ -109,9 +110,11 @@
         <i class="fa fa-chevron-left"></i>Back
         </button>
     </div>
-    <div class="col-md-2" *ngIf="user" >
-        <button type="button" class="btn btn-primary" (click)="updateUser(user.id)">Save Changes</button>
+    <div class="col-md-2" >
+        <button type="submit" class="btn btn-primary" (click)="updateUser()">Save Changes</button>
     </div>
+    
+    <!-- (click)="updateUser()" -->
 
     </div>
 </div>

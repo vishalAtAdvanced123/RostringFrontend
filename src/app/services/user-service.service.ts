@@ -27,7 +27,7 @@ export class UserServiceService {
     return this.http.get<IUser>(this.baseUrl + '/' + id);
   }
   
-  updateUser(id :any , user : any):Observable<IUser>{
-    return this.http.put<IUser>(this.baseUrl+ '/' + id , user);
+  updateUser(id :any , user : IUser):Observable<IUser>{
+    return this.http.put<IUser>(this.baseUrl + '/' + id, user);
   }
 }

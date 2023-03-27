@@ -12,6 +12,7 @@ import { UserService } from "./user.services";
 })
 export class UserProfileComponent implements OnInit{
 userTitle : string = 'Users List';
+repeatPass : string = 'none';
 imageWidth : number = 50;
 imageMargine : number = 2;
 errorMessage: string = '';
@@ -97,13 +98,18 @@ addUser(){
     password : this.Password.value,
     skillId : this.Skill.value
   }
-  console.log(this.employeeForm.get('name'));
-  this.userService.addUser(user).subscribe(
-    res => {
-      this.users.push(res);
-      this.clearForm();
-      this.getAllUsers();
-    });
+  if (this.Password.value == this.RPassword.value) {
+    this.userService.addUser(user).subscribe(
+      res => {
+        this.users.push(res);
+        this.clearForm();
+        this.getAllUsers();
+      });
+  }
+  else{
+    this.repeatPass='inline';
+  }
+  
 }
 
 onDelete(id : any){

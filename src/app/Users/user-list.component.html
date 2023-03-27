@@ -44,7 +44,7 @@
                         <td>
                             <a [routerLink]="['/users', user.id]">
 
-                                <button type="button" class="btn btn-primary" (click)="getUser">View Details</button>
+                                <button type="button" class="btn btn-primary" >View Details</button>
                             </a>
                         </td>
                         <td><button type="button" class="btn btn-danger" (click)="onDelete(user.id)">Delete User</button></td>
@@ -131,21 +131,25 @@
                 <div class="row mt-3" >
                     <div class="col">
                         <h6 class="text-secondary">Password</h6>
-                        <input type="text" class="form-control" placeholder=" Password" formControlName = 'pwd'>
-                    </div>
-                    <div class="col">
-                        <h6 class="text-secondary">Confirm Password</h6>
-                        <input type="text" class="form-control" placeholder=" Confirm Password" formControlName = 'rpwd'>
-                    </div>
-
-                    <div class="form-text text-danger" *ngIf="Password.errors?.['required'] &&
+                        <input type="password" class="form-control" placeholder=" Password" formControlName = 'pwd'>
+                        <div class="form-text text-danger" *ngIf="Password.errors?.['required'] &&
                         Password.touched" >
                             Password required!
                     </div>
-                    <div class="form-text text-danger" *ngIf="(Password.errors?.['minLength']  || Password.errors?.['maxLength']) &&
+                    <div class="form-text text-danger" *ngIf="Password.errors?.['minlength']  || Password.errors?.['maxlength'] &&
                     Password.touched" >
                             Password should be at least 6 and at the max 15 character long!
                     </div>
+                    </div>
+                    <div class="col">
+                        <h6 class="text-secondary">Confirm Password</h6>
+                        <input type="password" class="form-control" placeholder=" Confirm Password" formControlName = 'rpwd'>
+                        <div class="form-text text-danger" [ngStyle]="{'display':repeatPass}">
+                            Confirm Password does not matched !
+                        </div>
+                    </div>
+
+                    
                 </div>
                 <div class="row mt-3">
                     <h6 class="text-secondary">Skills</h6>
@@ -159,7 +163,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addUser()" >Add User </button>
+          <button type="submit" [disabled]="employeeForm.invalid" class="btn btn-primary" data-bs-dismiss="modal" (click)="addUser()" >Add User </button>
         </div>
       </div>
     </div>
