@@ -1,0 +1,143 @@
+
+<div class="card">
+    <div class="card-header">
+        {{userTitle}}
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                Manage Employee
+            </div>
+            <div class="col-md-8">
+                <input type="text" placeholder="Find Employee"
+                [(ngModel)]="listFilter "/>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add User</button>
+            </div>
+        </div>
+        <div class="table-responsive my-3" >
+            <table class="table" *ngIf="users.length">
+                <thead>
+                    <tr>
+                        <td>Image</td>
+                        <td>Employee Id</td>
+                        <td>Name</td>
+                        <td>Location</td>
+                        <td>Gender</td>
+                        <td>Action</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>
+                            <img img src="assets/default-avatar.jpg"
+                            [title]='user.name'
+                            [style.width.px]="imageWidth"
+                            [style.margin.px]="imageMargine">
+                        </td>
+                        <td>{{user.id}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.location}}</td> 
+                        <td>{{user.gender}}</td>
+                        <td>
+                            <a [routerLink]="['/users', user.id]">
+
+                                <button type="button" class="btn btn-primary" (click)="getUser">View Details</button>
+                            </a>
+                        </td>
+                        <td><button type="button" class="btn btn-danger" (click)="onDelete(user.id)">Delete User</button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+       
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">User Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          
+            <form [formGroup]="employeeForm">
+                <h6 class="text-secondary fst-italic">Personal Information</h6>
+                <div class="row mt-3">
+                    <div class="col">
+                        <input type="text" class="form-control" placeholder="name" formControlName = 'name'>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="row">
+                            <h6 class="text-secondary">Gender</h6>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="male" value="Male" formControlName = 'gender'>
+                                <label class="form-check-label" for="male">Male</label>
+                              </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female" formControlName = 'gender'>
+                                    <label class="form-check-label" for="female">Female</label>
+                                  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <h6 class="text-secondary">Email</h6>
+                    <input type="text" class="form-control" placeholder="email" 
+                    formControlName = 'email'>
+                   
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <h6 class="text-secondary">Location</h6>
+                        <select  class="form-select" formControlName = 'location'>
+                            <option value="default" selected>Select your Location</option>
+                            <option *ngFor="let option of locationOptions; let i = index;" value="{{i}}">
+                                 {{option | titlecase}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3" >
+                    <div class="col">
+                        <h6 class="text-secondary">Password</h6>
+                        <input type="text" class="form-control" placeholder=" Password" formControlName = 'pwd'>
+                    </div>
+                    <div class="col">
+                        <h6 class="text-secondary">Confirm Password</h6>
+                        <input type="text" class="form-control" placeholder=" Confirm Password" formControlName = 'rpwd'>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <h6 class="text-secondary">Skills</h6>
+                    <input type="text" class="form-control" placeholder="skillId" 
+                    formControlName = 'skill'>
+                   
+                </div>
+                
+
+           </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="addUser()" >Add User </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+        
+    </div>
+</div>
+
