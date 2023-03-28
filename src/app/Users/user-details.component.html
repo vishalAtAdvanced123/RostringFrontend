@@ -72,7 +72,7 @@
                             <h6 class="text-secondary">Location</h6>
                         <select  class="form-select" name="location" id="location" [(ngModel)]="userDetails.location">
                             <option value="default" selected>Select your Location</option>
-                            <option *ngFor="let option of locationOptions; let i = index;" value="{{i}}">
+                            <option *ngFor="let option of locationOptions; let i = index;" value="{{option}}">
                                  {{option | titlecase}}
                             </option>
                         </select>
