@@ -8,37 +8,35 @@ import { IUser } from './user';
   selector: 'up-user-details',
   templateUrl: './user-details.component.html'
 })
-export class UserDetailsComponent implements OnInit{
+export class UserDetailsComponent implements OnInit {
   pageTitle: string = 'User details';
-  locationOptions =[
+  locationOptions = [
     'Banglore',
     'Vadodara',
     'Ahmdabad'
-];
-userDetails : IUser ={
-        name: '',
-        email : '',
-        location : '',
-        position : '',
-        gender : '',
-        password : '',
-        skillId : 0
-};
+  ];
+  userDetails: IUser = {
+    name: '',
+    email: '',
+    location: '',
+    position: '',
+    gender: '',
+    password: '',
+    skillId: 0
+  };
 
+  constructor(private route: ActivatedRoute, private router: Router,
+    private userService: UserServiceService) {
 
-  
-  constructor(private route:ActivatedRoute,private router: Router,
-    private userService : UserServiceService ){
-      
-    }
+  }
   ngOnInit(): void {
     this.route.paramMap.subscribe({
-      next : (params) =>{
+      next: (params) => {
         const id = params.get('id');
 
-        if (id){
+        if (id) {
           this.userService.getUser(id).subscribe({
-            next:(response)=>{
+            next: (response) => {
               this.userDetails = response;
 
             }
@@ -47,28 +45,28 @@ userDetails : IUser ={
 
       }
     });
-    
+
 
   }
 
-  onBack():void{
+  onBack(): void {
     this.router.navigate(['/users']);
   }
 
-  updateUser(){
-    this.userService.updateUser(this.userDetails.id , this.userDetails).
-    subscribe({
-      next:(response)=>{
-        this.userDetails = response;
-        this.router.navigate(['/users']);
-      }
-    });
+  updateUser() {
+    this.userService.updateUser(this.userDetails.id, this.userDetails).
+      subscribe({
+        next: (response) => {
+          this.userDetails = response;
+          this.router.navigate(['/users']);
+        }
+      });
   }
 
- 
 
-  
-  
 
- 
+
+
+
+
 }
