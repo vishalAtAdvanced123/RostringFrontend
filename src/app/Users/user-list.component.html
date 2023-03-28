@@ -8,7 +8,8 @@
                 Manage Employee
             </div>
             <div class="col-md-8">
-                <input type="text" placeholder="Find Employee" [(ngModel)]="listFilter " />
+                <input type="text" class="form-control" placeholder="Find Employee" name=" listFilter" id="listFilter"
+                    [(ngModel)]="listFilter" />
             </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
@@ -31,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let user of filterUsers">
+                    <tr *ngFor="let user of users">
                         <td>
                             <img img src="assets/default-avatar.jpg" [title]='user.name' [style.width.px]="imageWidth"
                                 [style.margin.px]="imageMargine">
@@ -52,6 +53,7 @@
 
                 </tbody>
             </table>
+            
         </div>
 
         <!-- Modal For the Add User  -->
@@ -118,6 +120,7 @@
                                 </div>
 
                             </div>
+
                             <div class="row mt-3">
                                 <div class="col">
                                     <h6 class="text-secondary">Location</h6>
@@ -155,12 +158,19 @@
 
                             </div>
                             <div class="row mt-3">
-                                <h6 class="text-secondary">Skills</h6>
-                                <input type="text" class="form-control" placeholder="skillId" formControlName='skill'>
+                                <div class="col">
+                                    <h6 class="text-secondary">Skills</h6>
+                                    <input type="text" class="form-control" placeholder="skillId"
+                                        formControlName='skill'>
+                                </div>
+                                <div class="col">
+                                    <h6 class="text-secondary">Join as :</h6>
+                                    <input type="text" class="form-control" placeholder="position"
+                                        formControlName='position'>
+
+                                </div>
 
                             </div>
-
-
                         </form>
 
                     </div>

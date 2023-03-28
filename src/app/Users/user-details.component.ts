@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from '../services/user-service.service';
+import { ISkills } from './skill';
 import { IUser } from './user';
 
 @Component({
@@ -13,7 +14,7 @@ export class UserDetailsComponent implements OnInit {
   locationOptions = [
     'Banglore',
     'Vadodara',
-    'Ahmdabad'
+    'Ahmadabad'
   ];
   userDetails: IUser = {
     name: '',
@@ -23,6 +24,11 @@ export class UserDetailsComponent implements OnInit {
     gender: '',
     password: '',
     skillId: 0
+  };
+
+  userSkill: ISkills = {
+    id: 0,
+    name: ''
   };
 
   constructor(private route: ActivatedRoute, private router: Router,
@@ -38,15 +44,28 @@ export class UserDetailsComponent implements OnInit {
           this.userService.getUser(id).subscribe({
             next: (response) => {
               this.userDetails = response;
-
+              this.userService.getSkill(this.userDetails.skillId).subscribe({
+                next: (res) => {
+                  this.userSkill = res;
+                }
+              })
             }
           });
         }
+
 
       }
     });
 
 
+  }
+
+  getSkill(skillId: any) {
+    this.userService.getSkill(skillId).subscribe({
+      next: (res) => {
+        this.getSkill(res);
+      }
+    });
   }
 
   onBack(): void {

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { UserServiceService } from "../services/user-service.service";
+import { ISkills } from "./skill";
 import { IUser } from "./user";
 
 
@@ -17,33 +18,39 @@ export class UserProfileComponent implements OnInit {
   errorMessage: string = '';
   sub!: Subscription;
 
-  private _listFilter: string = '';
+  private _listFilter: string ='';
   get listFilter(): string {
     return this._listFilter
   }
+  skills : ISkills[] =[];
+  users: IUser[] = [];
+  filterUsers: IUser[] = this.users;
 
+ 
   set listFilter(value: string) {
     this._listFilter = value;
     console.log('In Setter:', value)
-    if (value==''){
-      this.filterUsers = this.users
-    }
-    else{
+    this.filterUsers = this.performFilter(value);
+    
+  }
 
-      this.filterUsers = this.performFilter(value);
-    }
+  performFilter(filterBy: string): IUser[] {
+    filterBy = filterBy.toLocaleLowerCase();
+    return this.users.filter((user: IUser) =>
+      user.name.toLocaleLowerCase().includes(filterBy));
+
   }
 
   locationOptions = [
     'Banglore',
     'Vadodara',
-    'Ahmdabad'
+    'Ahmadabad'
   ];
+  
 
   employeeForm: FormGroup;
 
-  filterUsers: IUser[] = [];
-  users: IUser[] = [];
+  
 
 
   constructor(private userService: UserServiceService,
@@ -75,7 +82,8 @@ export class UserProfileComponent implements OnInit {
     })
     this.getAllUsers();
   }
-
+  
+  // Get All The Users
   getAllUsers() {
     this.userService.getAllUsers()
       .subscribe(
@@ -85,12 +93,16 @@ export class UserProfileComponent implements OnInit {
       );
   }
 
-  performFilter(filterBy: string): IUser[] {
-    filterBy = filterBy.toLocaleLowerCase();
-    return this.users.filter((user: IUser) =>
-      user.name.toLocaleLowerCase().includes(filterBy));
-
+  getAllSkills() {
+    this.userService.getAllSkills()
+      .subscribe(
+        response => {
+          this.skills = response
+        }
+      );
   }
+
+  
 
   // Function For the Add User 
   addUser() {
@@ -134,6 +146,8 @@ export class UserProfileComponent implements OnInit {
       })
   }
 
+  
+
  //For Clear the form
   clearForm() {
     this.EmpName.setValue('');
@@ -169,7 +183,7 @@ export class UserProfileComponent implements OnInit {
   public get Skill(): FormControl {
     return this.employeeForm.get('skill') as FormControl;
   }
-
+ 
 
 
 }
