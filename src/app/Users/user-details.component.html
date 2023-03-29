@@ -98,9 +98,15 @@
                             <input type="text" class="form-control" placeholder=" Confirm Password">
                         </div>
                         <div class="col">
-                            <h6 class="text-secondary">Skill Id</h6>
-                            <input type="text" class="form-control" placeholder=" skill" name="skillId" id="skillId"
-                                [(ngModel)]="userDetails.skillId">
+                            <h6 class="text-secondary">Skill</h6>
+                            <!-- <input type="text" class="form-control" placeholder=" skill" name="skillId" id="skillId"
+                                [(ngModel)]="userDetails.skillId"> -->
+                                <select class="form-select" name="skill" id="skill" [(ngModel)]="userDetails.skillId">
+                                    <option value="default" selected>Select your Skill</option>
+                                    <option *ngFor="let skill of skills;" value="{{skill.id}}">
+                                        {{skill.name | titlecase}}
+                                    </option>
+                                </select>
                         </div>
                     </div>
                 </div>

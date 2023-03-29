@@ -1,6 +1,6 @@
 export interface ISkills{
     
-    id?:number;
+    id?:any;
     name: string;
     
 }

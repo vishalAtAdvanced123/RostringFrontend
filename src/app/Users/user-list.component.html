@@ -160,8 +160,14 @@
                             <div class="row mt-3">
                                 <div class="col">
                                     <h6 class="text-secondary">Skills</h6>
-                                    <input type="text" class="form-control" placeholder="skillId"
-                                        formControlName='skill'>
+                                    <!-- <input type="text" class="form-control" placeholder="skillId"
+                                        formControlName='skill'> -->
+                                        <select class="form-select" formControlName='skill'>
+                                            <option value="default" selected>Select your Skill</option>
+                                            <option *ngFor="let skill of skills; let i = index;" value="{{skill.id}}">
+                                                {{skill.name | titlecase}}
+                                            </option>
+                                        </select>
                                 </div>
                                 <div class="col">
                                     <h6 class="text-secondary">Join as :</h6>

@@ -15,8 +15,6 @@ export class UserProfileComponent implements OnInit {
   repeatPass: string = 'none';
   imageWidth: number = 50;
   imageMargine: number = 2;
-  errorMessage: string = '';
-  sub!: Subscription;
 
   private _listFilter: string ='';
   get listFilter(): string {
@@ -81,6 +79,7 @@ export class UserProfileComponent implements OnInit {
       skill: this.fb.control('')
     })
     this.getAllUsers();
+    this.getAllSkills();
   }
   
   // Get All The Users

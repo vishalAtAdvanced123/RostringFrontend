@@ -16,6 +16,8 @@ export class UserDetailsComponent implements OnInit {
     'Vadodara',
     'Ahmadabad'
   ];
+
+  skills : ISkills[] = [];
   userDetails: IUser = {
     name: '',
     email: '',
@@ -30,6 +32,15 @@ export class UserDetailsComponent implements OnInit {
     id: 0,
     name: ''
   };
+
+  getAllSkills() {
+    this.userService.getAllSkills()
+      .subscribe(
+        response => {
+          this.skills = response
+        }
+      );
+  }
 
   constructor(private route: ActivatedRoute, private router: Router,
     private userService: UserServiceService) {
@@ -56,6 +67,7 @@ export class UserDetailsComponent implements OnInit {
 
       }
     });
+    this.getAllSkills();
 
 
   }
