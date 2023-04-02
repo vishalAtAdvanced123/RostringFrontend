@@ -1,0 +1,82 @@
+<up-user-details></up-user-details>
+<!-- Form for the Udate User -->
+<div class="card">
+    <div class="card-body">
+        <div class="row mt-6">
+            <form #form="ngForm" (ngSubmit)="updateUser()">
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h6 class="text-secondary fst-italic mt-6">Name</h6>
+                        <input type="text" class="form-control" placeholder="name" name="name" id="name"
+                            [(ngModel)]="userDetails.name">
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-secondary fst-italic mt-6">Gender</h6>
+                        <input type="text" class="form-control" id="gender" placeholder="gender" name="gender"
+                            [(ngModel)]="userDetails.gender">
+                    </div>
+
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h6 class="text-secondary fst-italic mt-6">Position</h6>
+                        <input type="text" class="form-control" placeholder="position" name="position" id="position"
+                            [(ngModel)]="userDetails.position">
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-secondary">Location</h6>
+                        <select class="form-select" name="location" id="location" [(ngModel)]="userDetails.location">
+                            <option value="default" selected>Select your Location</option>
+                            <option *ngFor="let option of locationOptions;" value="{{option}}">
+                                {{option | titlecase}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <h6 class="text-secondary">Password</h6>
+                            <input type="text" class="form-control" placeholder=" Password" name="password"
+                                id="password" [(ngModel)]="userDetails.password">
+                        </div>
+                        <div class="col">
+                            <h6 class="text-secondary">Confirm Password</h6>
+                            <input type="text" class="form-control" placeholder=" Confirm Password">
+                        </div>
+                        <!-- <div class="col"> -->
+                            <!-- <h6 class="text-secondary">Skill</h6>
+                             <input type="text" class="form-control" placeholder=" skill" name="skillId" id="skillId"
+                                [(ngModel)]="userDetails.skillId">  -->
+                                <!-- <select class="form-select" name="skill" id="skill" [(ngModel)]="userDetails.skillId">
+                                    <option value="default" selected>Select your Skill</option>
+                                    <option *ngFor="let skill of skills;" value="{{skill.id}}">
+                                        {{skill.name | titlecase}}
+                                    </option>
+                                </select> -->
+                        <!-- </div>  -->
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+   
+
+    <div class="row">
+
+      <!-- Back Button  -->
+        <div class="col-md-10 mt-3">
+            <button type="button" class="btn btn-primary" style="width: 80px;" (click)='onBack()'>
+                <i class="fa fa-chevron-left"></i>Back
+            </button>
+        </div>
+
+      <!-- Save Changes Button  -->
+        <div class="col-md-2 mt-3">
+            <button type="submit" class="btn btn-primary" (click)="updateUser()">Save Changes</button>
+        </div> 
+
+        
+
+    </div>
+</div>
+</div>

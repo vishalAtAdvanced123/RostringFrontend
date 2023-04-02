@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserServiceService } from '../services/user-service.service';
-import { ISkills } from './skill';
-import { IUser } from './user';
+import { UserServiceService } from 'src/app/services/user-service.service';
+import { IUser } from '../user';
 
 @Component({
-  selector: 'up-user-details',
-  templateUrl: './user-details.component.html'
+  selector: 'app-user-update',
+  templateUrl: './user-update.component.html',
+  styleUrls: ['./user-update.component.css']
 })
-export class UserDetailsComponent implements OnInit {
-  pageTitle: string = 'User details';
-  
-
-  skills: ISkills[] = [];
-  Allskills: ISkills[] = [];
+export class UserUpdateComponent implements OnInit{
 
 
+  locationOptions = [
+    'Banglore',
+    'Vadodara',
+    'Ahmadabad'
+  ];
   userDetails: IUser = {
     name: '',
     email: '',
@@ -26,22 +25,6 @@ export class UserDetailsComponent implements OnInit {
     password: '',
     //skillId: 0
   };
-
-  userSkill: ISkills = {
-    id: 0,
-    name: ''
-  };
-
-
-  // Get All skills 
-  getAllSkills() {
-    this.userService.getAllSkills()
-      .subscribe(
-        response => {
-          this.skills = response
-        }
-      );
-  }
 
   constructor(private route: ActivatedRoute, private router: Router,
     private userService: UserServiceService) {
@@ -63,33 +46,19 @@ export class UserDetailsComponent implements OnInit {
               // })
             }
           });
-          this.userService.getSkill(id).subscribe({
-            next:(res) =>{
-               this.skills= res; 
-            }
-          })
         }
       }
     });
-    this.getAllSkills();
+    //this.getAllSkills();
+
 
   }
 
-  // Get skill 
-  getSkill(skillId: any) {
-    this.userService.getSkill(skillId).subscribe({
-      next: (res) => {
-        this.getSkill(res);
-      }
-    });
-  }
 
-  // function for Back Button
   onBack(): void {
     this.router.navigate(['/users']);
   }
 
-  // Update User 
   updateUser() {
     this.userService.updateUser(this.userDetails.id, this.userDetails).
       subscribe({
@@ -100,5 +69,8 @@ export class UserDetailsComponent implements OnInit {
       });
   }
 
+
+
+  
 
 }

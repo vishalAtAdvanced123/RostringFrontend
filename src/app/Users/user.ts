@@ -7,5 +7,5 @@ export interface IUser{
         position : string;
         gender : string;
         password : string;
-        skillId ?: any;
+        //skillId ?: any;
 }

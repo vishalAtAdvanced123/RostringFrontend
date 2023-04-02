@@ -22,7 +22,7 @@ export class UserProfileComponent implements OnInit {
   }
   skills : ISkills[] =[];
   users: IUser[] = [];
-  filterUsers: IUser[] = this.users;
+  filterUsers: IUser[] = [];
 
  
   set listFilter(value: string) {
@@ -45,8 +45,8 @@ export class UserProfileComponent implements OnInit {
     'Ahmadabad'
   ];
   
-
-  employeeForm: FormGroup;
+ getForm : FormGroup;
+ employeeForm: FormGroup;
 
   
 
@@ -54,8 +54,10 @@ export class UserProfileComponent implements OnInit {
   constructor(private userService: UserServiceService,
     private fb: FormBuilder) {
     this.employeeForm = fb.group({});
+    this.getForm = fb.group({});
 
   }
+  
   ngOnInit(): void {
     this.employeeForm = this.fb.group({
       name: this.fb.control('',
@@ -78,13 +80,19 @@ export class UserProfileComponent implements OnInit {
       rpwd: this.fb.control(''),
       skill: this.fb.control('')
     })
+    this.getForm = this.fb.group({
+      pageSize :this.fb.control(0),
+      pageNumber : this.fb.control(0)
+    })
     this.getAllUsers();
-    this.getAllSkills();
+    //this.getAllSkills();
   }
   
   // Get All The Users
   getAllUsers() {
-    this.userService.getAllUsers()
+    let pageSize = this.PageSize.value;
+    let pageNumber = this.PageNumber.value;
+    this.userService.getAllUsers(pageSize,pageNumber)
       .subscribe(
         response => {
           this.users = response
@@ -92,14 +100,15 @@ export class UserProfileComponent implements OnInit {
       );
   }
 
-  getAllSkills() {
-    this.userService.getAllSkills()
-      .subscribe(
-        response => {
-          this.skills = response
-        }
-      );
-  }
+  // Code for Get All the Skills
+  // getAllSkills() {
+  //   this.userService.getAllSkills()
+  //     .subscribe(
+  //       response => {
+  //         this.skills = response
+  //       }
+  //     );
+  // }
 
   
 
@@ -112,7 +121,7 @@ export class UserProfileComponent implements OnInit {
       position: this.Position.value,
       gender: this.Gender.value,
       password: this.Password.value,
-      skillId: this.Skill.value
+      //skillId: this.Skill.value
     }
     if (this.Password.value == this.RPassword.value) {
       this.userService.addUser(user).subscribe(
@@ -158,6 +167,13 @@ export class UserProfileComponent implements OnInit {
     this.RPassword.setValue('');
   }
 
+  public get PageSize(): FormControl{
+    return this.getForm.get('pageSize') as FormControl;
+  }
+  public get PageNumber(): FormControl{
+    return this.getForm.get('pageNumber') as FormControl;
+  }
+
   public get EmpName(): FormControl {
     return this.employeeForm.get('name') as FormControl;
   }
@@ -179,9 +195,9 @@ export class UserProfileComponent implements OnInit {
   public get RPassword(): FormControl {
     return this.employeeForm.get('rpwd') as FormControl;
   }
-  public get Skill(): FormControl {
-    return this.employeeForm.get('skill') as FormControl;
-  }
+  // public get Skill(): FormControl {
+  //   return this.employeeForm.get('skill') as FormControl;
+  // }
  
 
 

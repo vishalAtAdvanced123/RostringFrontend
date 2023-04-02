@@ -3,18 +3,37 @@
         {{userTitle}}
     </div>
     <div class="card-body">
+
+        <!-- Body Header -->
         <div class="row">
-            <div class="col-md-2">
-                Manage Employee
-            </div>
-            <div class="col-md-8">
-                <input type="text" class="form-control" placeholder="Find Employee" name=" listFilter" id="listFilter"
-                    [(ngModel)]="listFilter" />
-            </div>
-            <div class="col-md-2">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add
-                    User</button>
-            </div>
+            <form [formGroup]="getForm">
+                <div class="row">
+                    <div class="col">
+                        Manage Employee
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="pageSize" 
+                            id="pageSize" formControlName="pageSize"/>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="pageNumber" 
+                            id="listFilter" formControlName="pageNumber"/>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" (click)="getAllUsers()"
+                            >Show Result</button>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal">Add
+                            User</button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <!-- Table of the Users -->
@@ -53,7 +72,7 @@
 
                 </tbody>
             </table>
-            
+
         </div>
 
         <!-- Modal For the Add User  -->
@@ -154,28 +173,22 @@
                                         Confirm Password does not matched !
                                     </div>
                                 </div>
-
-
                             </div>
                             <div class="row mt-3">
                                 <div class="col">
                                     <h6 class="text-secondary">Skills</h6>
-                                    <!-- <input type="text" class="form-control" placeholder="skillId"
-                                        formControlName='skill'> -->
-                                        <select class="form-select" formControlName='skill'>
-                                            <option value="default" selected>Select your Skill</option>
-                                            <option *ngFor="let skill of skills; let i = index;" value="{{skill.id}}">
-                                                {{skill.name | titlecase}}
-                                            </option>
-                                        </select>
+                                    <select class="form-select" formControlName='skill'>
+                                        <option value="default" selected>Select your Skill</option>
+                                        <option *ngFor="let skill of skills; let i = index;" value="{{skill.id}}">
+                                            {{skill.name | titlecase}}
+                                        </option>
+                                    </select>
                                 </div>
                                 <div class="col">
                                     <h6 class="text-secondary">Join as :</h6>
                                     <input type="text" class="form-control" placeholder="position"
                                         formControlName='position'>
-
                                 </div>
-
                             </div>
                         </form>
 
@@ -187,7 +200,5 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>

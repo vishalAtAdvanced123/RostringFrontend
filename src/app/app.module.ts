@@ -9,13 +9,18 @@ import { UserDetailsComponent } from './Users/user-details.component';
 import { RouterModule } from '@angular/router';
 import { WelcomeComponent } from './Home/welcome.component';
 import {  HttpClientModule} from "@angular/common/http";
+import { SkillComponent } from './Users/skill/skill.component';
+import { UserUpdateComponent } from './Users/user-update/user-update.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     UserProfileComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    SkillComponent,
+    UserUpdateComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -27,6 +32,8 @@ import {  HttpClientModule} from "@angular/common/http";
       {path : 'users' , component : UserProfileComponent},
       {path : 'users/:id', component : UserDetailsComponent},
       {path : 'welcome' , component : WelcomeComponent},
+      {path : 'user/:id', component : UserUpdateComponent},
+      {path : 'skills/:id' , component : SkillComponent},
       {path : '' , redirectTo: 'welcome', pathMatch: 'full' },
       {path : '**' , redirectTo : 'welcome', pathMatch : 'full'}
     ])

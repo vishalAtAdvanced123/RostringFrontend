@@ -13,8 +13,9 @@ export class UserServiceService {
 
   constructor(private http : HttpClient) { }
 
-  getAllUsers() : Observable<IUser[]>{
-    return this.http.get<IUser[]>(this.baseUrl)
+  getAllUsers(pageSize: any , pageNumber : any) : Observable<any>{
+    return this.http.get<any>(this.baseUrl+'?pageSize='+pageSize+'&pageNumber='+pageNumber )
+    // ?pageSize=3&pageNumber=1
   }
 
   addUser(user : IUser){
@@ -38,7 +39,14 @@ export class UserServiceService {
     return this.http.get<ISkills[]>(this.skillUrl);
   }
 
-  getSkill(id : any):Observable<ISkills>{
-    return this.http.get<ISkills>(this.skillUrl + '/' + id)
+  getSkill(id : any):Observable<ISkills[]>{
+    return this.http.get<ISkills[]>(this.skillUrl+ '/' + id)
+  }
+
+  addSkill(id :any , skill : ISkills):Observable<ISkills>{
+    return this.http.post<ISkills>(this.skillUrl + '/'+ id , skill)
+  }
+  deleteSkill(id : any): Observable<ISkills>{
+    return this.http.delete<ISkills>(this.skillUrl + '/' + id)
   }
 }

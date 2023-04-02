@@ -1,0 +1,66 @@
+<up-user-details></up-user-details>
+
+<div class="row">
+
+    <div class="col md-6">
+
+    </div>
+
+    <div class="col md-4">
+        <form [formGroup]="skillForm">
+            <div class="col">
+                <h6 class="text-secondary">Skills</h6>
+                <select class="form-select" formControlName='name'>
+                    <option value="default" selected>Select your Skill</option>
+                    <option *ngFor="let option of skillsOption" value="{{option}}">
+                        {{option| titlecase}}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="col md-2 mt-4">
+        <button type="button" class="btn btn-primary" (click)="addSkill()">Add
+            Skills</button>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col md-6">
+        <div class="table-responsive mt-4">
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <td>skills</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr *ngFor="let skill of skills">
+
+                        <td>{{skill.name}}</td>
+                        <td><button type="button" class="btn btn-danger" (click)="deleteSkill(skill.id)">Delete
+                                Skill</button></td>
+                        <!-- (click)="onDelete(user.id)" -->
+
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col md-3">
+
+    </div>
+</div>
+
+<div class="col-md-10 mt-3">
+    <button type="button" class="btn btn-primary" style="width: 80px;" (click)='onBack()'>
+        <i class="fa fa-chevron-left"></i>Back
+    </button>
+</div>
