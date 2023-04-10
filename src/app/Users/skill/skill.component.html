@@ -10,10 +10,10 @@
         <form [formGroup]="skillForm">
             <div class="col">
                 <h6 class="text-secondary">Skills</h6>
-                <select class="form-select" formControlName='name'>
+                <select class="form-select" formControlName='skillId'>
                     <option value="default" selected>Select your Skill</option>
-                    <option *ngFor="let option of skillsOption" value="{{option}}">
-                        {{option| titlecase}}
+                    <option *ngFor="let option of AllSkills" value="{{option.id}}">
+                        {{option.skillName | titlecase}}
                     </option>
                 </select>
             </div>
@@ -41,13 +41,13 @@
 
                 <tbody>
 
-                    <tr *ngFor="let skill of skills">
+                    <tr *ngFor="let x of SkillstoDisplay;" >
 
-                        <td>{{skill.name}}</td>
-                        <td><button type="button" class="btn btn-danger" (click)="deleteSkill(skill.id)">Delete
+                        <td >{{x.skillName}}</td>
+                        <td><button type="button" class="btn btn-danger" (click)="deleteSkill(x.id)">Delete
                                 Skill</button></td>
                         <!-- (click)="onDelete(user.id)" -->
-
+                            
                     </tr>
 
                 </tbody>

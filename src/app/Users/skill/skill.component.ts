@@ -12,22 +12,9 @@ import { ISkills } from '../skill';
 export class SkillComponent implements OnInit {
 
 
-  skills: ISkills[] = [];
-  AllSkills: ISkills[] = [];
-  skillsOption=[
-    'C#',
-    'Python',
-    'Machine Learning',
-    'Web API',
-    'Angular',
-    '.NET',
-    'C++',
-    'Java',
-    'Bootstrap',
-    'Deep Learning'
-  ];
-
-  
+  skills: any[] = [];
+  AllSkills: any[] = [];
+  SkillstoDisplay: any[] = [];
 
   skillForm: FormGroup;
 
@@ -36,62 +23,47 @@ export class SkillComponent implements OnInit {
     this.skillForm = fb.group({});
   }
   ngOnInit(): void {
-    
+
     this.skillForm = this.fb.group({
-      name : this.fb.control('')
+      skillId: this.fb.control(0)
     })
 
     this.route.paramMap.subscribe({
       next: (params) => {
         const id = params.get('id');
-
-        if (id) {
-          this.userService.getSkill(id).subscribe({
-            next: (response) => {
-              this.skills = response;
-            }
-          });
-        }
-        // let skill: ISkills = {
-        //   name: this.SkillName.value
-        // };
-
-        // if (id) {
-        //   this.userService.addSkill(id, skill).subscribe({
-        //     next : (res)=>{
-        //       this.skills.push(res);
-        //     }
-        //   });
-        // }
+        this.getSkill(id);
       }
     })
     //this.addSkill();
     this.getAllSkills();
-    
-    
-    
+    //this.getskilltodisplay();
+
+
+
   }
   
-  addSkill(){
+
+  addSkill() {
     this.route.paramMap.subscribe({
-      next:(params) => {
+      next: (params) => {
         const id = params.get('id');
 
-        let skill : ISkills ={
-          name : this.SkillName.value
+        let skill: any = {
+          skillId: this.SkillId.value
         }
-        if(id){
-          this.userService.addSkill(id , skill).subscribe({
-            next:(res)=>{
-              this.getSkill(id);
+        if (id) {
+          this.userService.addSkill(id, skill).subscribe({
+            next: (res) => {
               this.skills.push(res);
-              
+              this.getSkill(id);
+              //this.getOnlyskill(id);
+
             }
           })
         }
       }
     })
-      
+
   }
 
   getAllSkills() {
@@ -102,11 +74,20 @@ export class SkillComponent implements OnInit {
         }
       );
   }
-
   getSkill(id: any) {
-    this.userService.getSkill(id).subscribe(
+    this.userService.getSkillForUser(id).subscribe(
       response => {
         this.skills = response;
+        console.log(response)
+        let skillList: any = [];
+        for (var x of response) {
+          this.userService.getSkill(x.skillId).subscribe(
+            res => {
+              skillList.push(res)
+            }
+          )
+        }
+        this.SkillstoDisplay = skillList;
       }
     )
   }
@@ -115,23 +96,24 @@ export class SkillComponent implements OnInit {
     this.router.navigate(['/users']);
   }
 
-  deleteSkill(skillId : any){
+  deleteSkill(skillId: any) {
     this.route.paramMap.subscribe({
-      next:(params) => {
+      next: (params) => {
         const id = params.get('id');
-        if(id){
-          this.userService.deleteSkill(skillId).subscribe(
-           res=>{
-              this.getSkill(id);
-            }
-          )
+        if (id) {
+
         }
+        this.userService.deleteSkill(id, skillId).subscribe(
+          res => {
+            this.getSkill(id);
+          }
+        )
       }
     })
   }
 
-  public get SkillName(): FormControl {
-    return this.skillForm.get('name') as FormControl;
+  public get SkillId(): FormControl {
+    return this.skillForm.get('skillId') as FormControl;
   }
 
 }

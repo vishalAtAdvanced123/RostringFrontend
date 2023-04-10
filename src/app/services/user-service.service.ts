@@ -9,10 +9,52 @@ import { IUser } from '../Users/user';
 })
 export class UserServiceService {
   baseUrl = 'https://localhost:7107/api/users'
-  skillUrl = 'https://localhost:7107/api/users/Skill'
+  UserSkillUrl = 'https://localhost:7107/api/users/Skill'
+  locationUrl = 'https://localhost:7107/api/users/locations'
+  designationUrl = 'https://localhost:7107/api/user/designation'
+  genderUrl = 'https://localhost:7107/api/users/gender'
+  skillUrl = 'https://localhost:7107/api/users/Skills'
+  
+ 
 
   constructor(private http : HttpClient) { }
 
+  //Gender
+  getGenders():Observable<any[]>{
+    return this.http.get<any[]>(this.genderUrl)
+  }
+  getGender(id : any): Observable<any>{
+    return this.http.get<any>(this.genderUrl + '/'+ id)
+  }
+
+  //Designation
+  getDesignations():Observable<any>{
+    return this.http.get<any>(this.designationUrl)
+  }
+  getDesignation(id : any): Observable<any>{
+    return this.http.get<any>(this.designationUrl + '/'+ id)
+  }
+  
+  //Skill
+  getAllSkills():Observable<any>{
+    return this.http.get<any>(this.skillUrl)
+  }
+  getSkill(id:any):Observable<any>{
+    return this.http.get<any>(this.skillUrl+'/'+id)
+  }
+
+
+  //Location
+  getLocations():Observable<any>{
+    return this.http.get<any>(this.locationUrl)
+  }
+  
+
+  getLocation(id : any): Observable<any>{
+    return this.http.get<any>(this.locationUrl + '/'+ id)
+  }
+
+  //Users
   getAllUsers(pageSize: any , pageNumber : any) : Observable<any>{
     return this.http.get<any>(this.baseUrl+'?pageSize='+pageSize+'&pageNumber='+pageNumber )
     // ?pageSize=3&pageNumber=1
@@ -35,18 +77,21 @@ export class UserServiceService {
     return this.http.put<IUser>(this.baseUrl + '/' + id, user);
   }
 
-  getAllSkills(): Observable<ISkills[]>{
-    return this.http.get<ISkills[]>(this.skillUrl);
+  //UserSkills
+
+  // getAllSkills(): Observable<ISkills[]>{
+  //   return this.http.get<ISkills[]>(this.skillUrl);
+  // }
+
+  getSkillForUser(id : any):Observable<any[]>{
+    return this.http.get<any[]>(this.UserSkillUrl+ '/' + id)
   }
 
-  getSkill(id : any):Observable<ISkills[]>{
-    return this.http.get<ISkills[]>(this.skillUrl+ '/' + id)
+  addSkill(id :any , skill: any):Observable<any>{
+    return this.http.post<any>(this.UserSkillUrl + '/'+ id , skill)
   }
-
-  addSkill(id :any , skill : ISkills):Observable<ISkills>{
-    return this.http.post<ISkills>(this.skillUrl + '/'+ id , skill)
-  }
-  deleteSkill(id : any): Observable<ISkills>{
-    return this.http.delete<ISkills>(this.skillUrl + '/' + id)
+  deleteSkill(id : any, skillId:any): Observable<any>{
+    return this.http.delete<any>(this.UserSkillUrl + '/' + id+'?SkillId='+skillId)  
+    // 1?SkillId=3
   }
 }

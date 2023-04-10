@@ -5,30 +5,43 @@
         <div class="row mt-6">
             <form #form="ngForm" (ngSubmit)="updateUser()">
                 <div class="row mt-3">
-                    <div class="col-md-6">
-                        <h6 class="text-secondary fst-italic mt-6">Name</h6>
-                        <input type="text" class="form-control" placeholder="name" name="name" id="name"
-                            [(ngModel)]="userDetails.name">
+                    <div class="col-md-4">
+                        <h6 class="text-secondary fst-italic mt-6">First Name</h6>
+                        <input type="text" class="form-control" placeholder="firstname" name="firtsName" id="firtsName"
+                            [(ngModel)]="userDetails.firstName">
                     </div>
-                    <div class="col-md-6">
-                        <h6 class="text-secondary fst-italic mt-6">Gender</h6>
-                        <input type="text" class="form-control" id="gender" placeholder="gender" name="gender"
-                            [(ngModel)]="userDetails.gender">
+                    <div class="col-md-4">
+                        <h6 class="text-secondary fst-italic mt-6">Last Name</h6>
+                        <input type="text" class="form-control" placeholder="last name" name="lastName" id="lastName"
+                            [(ngModel)]="userDetails.lastName">
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="text-secondary">Gender</h6>
+                        <select class="form-select" name="genderId" id="genderId" [(ngModel)]="userDetails.genderId">
+                            <option value="default" selected>Select your Location</option>
+                            <option *ngFor="let option of genders;" value="{{option.id}}">
+                                {{option.genderName | titlecase}}
+                            </option>
+                        </select>
                     </div>
 
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <h6 class="text-secondary fst-italic mt-6">Position</h6>
-                        <input type="text" class="form-control" placeholder="position" name="position" id="position"
-                            [(ngModel)]="userDetails.position">
+                        <h6 class="text-secondary">Designation</h6>
+                        <select class="form-select" name="designationId" id="designationId" [(ngModel)]="userDetails.designationId">
+                            <option value="default" selected>Select your Location</option>
+                            <option *ngFor="let option of designations;" value="{{option.id}}">
+                                {{option.designationName | titlecase}}
+                            </option>
+                        </select>
                     </div>
                     <div class="col-md-6">
                         <h6 class="text-secondary">Location</h6>
-                        <select class="form-select" name="location" id="location" [(ngModel)]="userDetails.location">
+                        <select class="form-select" name="locationId" id="locationId" [(ngModel)]="userDetails.locationId">
                             <option value="default" selected>Select your Location</option>
-                            <option *ngFor="let option of locationOptions;" value="{{option}}">
-                                {{option | titlecase}}
+                            <option *ngFor="let option of locations;" value="{{option.id}}">
+                                {{option.locationName | titlecase}}
                             </option>
                         </select>
                     </div>

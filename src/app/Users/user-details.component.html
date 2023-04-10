@@ -23,7 +23,7 @@
                             </tr>
                             <tr>
                                 <td>Employee Name : </td>
-                                <td>{{userDetails.name}}</td>
+                                <td>{{userDetails.userName}}</td>
                             </tr>
                             <tr>
                                 <td> Email : </td>
@@ -31,20 +31,20 @@
                             </tr>
                             <tr>
                                 <td> Location : </td>
-                                <td>{{userDetails.location}}</td>
+                                <td>{{location.locationName}}</td>
                             </tr>
                             <tr>
-                                <td> Position : </td>
-                                <td>{{userDetails.position}}</td>
+                                <td> Designation: </td>
+                                <td>{{designation.designationName}}</td>
                             </tr>
                             <tr>
                                 <td> Gender : </td>
-                                <td>{{userDetails.gender}}</td>
+                                <td>{{gender.genderName}}</td>
                             </tr>
-                            <tr>
+                            <!-- <tr >
                                 <td>Skills :</td>
-                                <td>{{userSkill.name}}</td>
-                            </tr>
+                                <td *ngFor="let skill of skills">{{skill.name}}</td>
+                            </tr> -->
 
 
 

@@ -13,22 +13,24 @@
                     </div>
 
 
+
                     <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="pageSize" 
-                            id="pageSize" formControlName="pageSize"/>
+                        <h6 class="text-secondary fst-italic">pageSize</h6>
+                        <input type="text" class="form-control" placeholder="pageSize" id="pageSize"
+                            formControlName="pageSize" />
                     </div>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="pageNumber" 
-                            id="listFilter" formControlName="pageNumber"/>
+                        <h6 class="text-secondary fst-italic">pageNumber</h6>
+                        <input type="text" class="form-control" placeholder="pageNumber" id="listFilter"
+                            formControlName="pageNumber" />
                     </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-primary" (click)="getAllUsers()"
-                            >Show Result</button>
+                    <div class="col-md-2 mt-4">
+                        <button type="button" class="btn btn-primary" (click)="getAllUsers()">Show Result</button>
                     </div>
 
 
                     <div class="col-md-2">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">Add
                             User</button>
                     </div>
@@ -43,9 +45,9 @@
                     <tr>
                         <td>Image</td>
                         <td>Employee Id</td>
+                        <td>UserName</td>
                         <td>Name</td>
-                        <td>Location</td>
-                        <td>Gender</td>
+                        <td>Email</td>
                         <td>Action</td>
                         <td></td>
                     </tr>
@@ -53,15 +55,15 @@
                 <tbody>
                     <tr *ngFor="let user of users">
                         <td>
-                            <img img src="assets/default-avatar.jpg" [title]='user.name' [style.width.px]="imageWidth"
-                                [style.margin.px]="imageMargine">
+                            <img img src="assets/default-avatar.jpg" [title]='user.firstName + user.lastName'
+                                [style.width.px]="imageWidth" [style.margin.px]="imageMargine">
                         </td>
                         <td>{{user.id}}</td>
-                        <td>{{user.name}}</td>
-                        <td>{{user.location}}</td>
-                        <td>{{user.gender}}</td>
+                        <td>{{user.userName}}</td>
+                        <td>{{user.firstName + ' ' + user.lastName}}</td>
+                        <td>{{user.email}}</td>
                         <td>
-                            <a [routerLink]="['/users', user.id]">
+                            <a [routerLink]="['/users', user.id ]" [routerLink]="['/user' ,user.id]">
 
                                 <button type="button" class="btn btn-primary">View Details</button>
                             </a>
@@ -89,42 +91,59 @@
                             <h6 class="text-secondary fst-italic">Personal Information</h6>
                             <div class="row mt-3">
                                 <div class="col">
-                                    <input type="text" class="form-control" placeholder="name" formControlName='name'>
-                                    <div class="form-text text-danger" *ngIf="EmpName.errors?.['required'] &&
-                        EmpName.touched">
-                                        name is require!
+                                    <input type="text" class="form-control" placeholder="first name"
+                                        formControlName='firstName'>
+                                    <div class="form-text text-danger" *ngIf="FirstName.errors?.['required'] &&
+                        FirstName.touched">
+                                       first name is require!
                                     </div>
-                                    <div class="form-text text-danger" *ngIf="EmpName.errors?.['pattern'] &&
-                        EmpName.touched">
+                                    <div class="form-text text-danger" *ngIf="FirstName.errors?.['pattern'] &&
+                                    FirstName.touched">
+                                        name should start with Alphabet!
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="form-control" placeholder="last name"
+                                        formControlName='lastName'>
+                                    <div class="form-text text-danger" *ngIf="LastName.errors?.['required'] &&
+                                    LastName.touched">
+                                       last name is require!
+                                    </div>
+                                    <div class="form-text text-danger" *ngIf="LastName.errors?.['pattern'] &&
+                                    LastName.touched">
                                         name should start with Alphabet!
                                     </div>
                                 </div>
                             </div>
                             <div class="row mt-3">
                                 <div class="col">
-                                    <div class="row">
-                                        <h6 class="text-secondary">Gender</h6>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="male"
-                                                    value="Male" formControlName='gender'>
-                                                <label class="form-check-label" for="male">Male</label>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="gender" id="female"
-                                                    value="Female" formControlName='gender'>
-                                                <label class="form-check-label" for="female">Female</label>
-                                            </div>
-                                        </div>
-                                        <div class="form-text text-danger" *ngIf="Gender.errors?.['required']">
-                                            Select the Gender!
-                                        </div>
-                                    </div>
+                                    <h6 class="text-secondary">Designation :</h6>
+                                    <select class="form-select" formControlName='designationId'>
+                                        <option value="default" selected>Select your Designation</option>
+                                        <option *ngFor="let option of designations" value="{{option.id}}">
+                                            {{option.designationName | titlecase}}
+                                        </option>
+                                    </select>
                                 </div>
+                                <div class="col">
+                                    <h6 class="text-secondary">Gender</h6>
+                                    <select class="form-select" formControlName='genderId'>
+                                        <option value="default" selected>Select your Gender</option>
+                                        <option *ngFor="let option of genders; let i = index;" value="{{option.id}}">
+                                            {{option.genderName | titlecase}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <h6 class="text-secondary">UserName</h6>
+                                <input type="text" class="form-control" placeholder="user name" formControlName="userName">
+                                <div class="form-text text-danger" *ngIf="UserName.errors?.['required'] &&
+                        UserName.touched">
+                                    userName required!
+                                </div>
+
                             </div>
                             <div class="row mt-3">
                                 <h6 class="text-secondary">Email</h6>
@@ -143,10 +162,10 @@
                             <div class="row mt-3">
                                 <div class="col">
                                     <h6 class="text-secondary">Location</h6>
-                                    <select class="form-select" formControlName='location'>
+                                    <select class="form-select" formControlName='locationId'>
                                         <option value="default" selected>Select your Location</option>
-                                        <option *ngFor="let option of locationOptions; let i = index;" value="{{i}}">
-                                            {{option | titlecase}}
+                                        <option *ngFor="let option of locations" value="{{option.id}}">
+                                            {{option.locationName | titlecase}}
                                         </option>
                                     </select>
                                 </div>
@@ -175,7 +194,7 @@
                                 </div>
                             </div>
                             <div class="row mt-3">
-                                <div class="col">
+                                <!-- <div class="col">
                                     <h6 class="text-secondary">Skills</h6>
                                     <select class="form-select" formControlName='skill'>
                                         <option value="default" selected>Select your Skill</option>
@@ -183,19 +202,16 @@
                                             {{skill.name | titlecase}}
                                         </option>
                                     </select>
-                                </div>
-                                <div class="col">
-                                    <h6 class="text-secondary">Join as :</h6>
-                                    <input type="text" class="form-control" placeholder="position"
-                                        formControlName='position'>
-                                </div>
+                                </div> -->
+                               
                             </div>
                         </form>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" [disabled]="employeeForm.invalid" class="btn btn-primary"
+                        <button type="submit" [disabled]="employeeForm.invalid" class="btn btn-success"
                             data-bs-dismiss="modal" (click)="addUser()">Add User </button>
+                        <!-- (click)="addUser()" -->
                     </div>
                 </div>
             </div>

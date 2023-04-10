@@ -10,20 +10,26 @@ import { IUser } from '../user';
 })
 export class UserUpdateComponent implements OnInit{
 
+  locations : any[] =[];
+  designations : any[]=[];
+  genders : any[]=[];
 
   locationOptions = [
     'Banglore',
     'Vadodara',
     'Ahmadabad'
   ];
+
+
   userDetails: IUser = {
-    name: '',
-    email: '',
-    location: '',
-    position: '',
-    gender: '',
-    password: '',
-    //skillId: 0
+        userName: '',
+        firstName : '',
+        lastName : '',
+        locationId : 0,
+        designationId : 0,
+        genderId : 0,
+        email : '',
+        password : ''
   };
 
   constructor(private route: ActivatedRoute, private router: Router,
@@ -39,17 +45,16 @@ export class UserUpdateComponent implements OnInit{
           this.userService.getUser(id).subscribe({
             next: (response) => {
               this.userDetails = response;
-              // this.userService.getSkill(this.userDetails.skillId).subscribe({
-              //   next: (res) => {
-              //     this.userSkill = res;
-              //   }
-              // })
+              
             }
           });
         }
       }
     });
     //this.getAllSkills();
+    this.getLocations();
+    this.getDesignations();
+    this.getGenders();
 
 
   }
@@ -67,6 +72,30 @@ export class UserUpdateComponent implements OnInit{
           this.router.navigate(['/users']);
         }
       });
+  }
+
+  getGenders(){
+    this.userService.getGenders().subscribe(
+      response =>{
+        this.genders = response;
+      }
+    )
+  }
+
+  getDesignations(){
+    this.userService.getDesignations().subscribe(
+      response =>{
+        this.designations = response;
+      }
+    )
+  }
+
+  getLocations(){
+    this.userService.getLocations().subscribe(
+      response =>{
+        this.locations = response;
+      }
+    )
   }
 
 

@@ -11,20 +11,24 @@ import { IUser } from './user';
 })
 export class UserDetailsComponent implements OnInit {
   pageTitle: string = 'User details';
-  
+
 
   skills: ISkills[] = [];
   Allskills: ISkills[] = [];
+  location: any = '';
+  gender: any = '';
+  designation: any = '';
 
 
   userDetails: IUser = {
-    name: '',
+    userName: '',
+    firstName: '',
+    lastName: '',
+    locationId: 0,
+    designationId: 0,
+    genderId: 0,
     email: '',
-    location: '',
-    position: '',
-    gender: '',
-    password: '',
-    //skillId: 0
+    password: ''
   };
 
   userSkill: ISkills = {
@@ -38,7 +42,7 @@ export class UserDetailsComponent implements OnInit {
     this.userService.getAllSkills()
       .subscribe(
         response => {
-          this.skills = response
+          this.Allskills = response
         }
       );
   }
@@ -56,22 +60,44 @@ export class UserDetailsComponent implements OnInit {
           this.userService.getUser(id).subscribe({
             next: (response) => {
               this.userDetails = response;
-              // this.userService.getSkill(this.userDetails.skillId).subscribe({
-              //   next: (res) => {
-              //     this.userSkill = res;
-              //   }
-              // })
+              this.userService.getGender(this.userDetails.genderId).subscribe(
+                res => {
+                  this.gender = res;
+                }
+              )
+              this.userService.getLocation(this.userDetails.locationId).subscribe(
+                res => {
+                  this.location = res;
+                }
+              )
+              this.userService.getDesignation(this.userDetails.designationId).subscribe(
+                res => {
+                  this.designation = res;
+                }
+              )
+
+
             }
           });
-          this.userService.getSkill(id).subscribe({
-            next:(res) =>{
-               this.skills= res; 
+          this.userService.getSkillForUser(id).subscribe({
+            next: (res) => {
+              this.skills = res;
             }
           })
         }
+        if (id) {
+          this.userService.getSkillForUser(id).subscribe({
+            next: (response) => {
+              this.skills = response;
+            }
+          });
+        }
+
+
       }
     });
     this.getAllSkills();
+
 
   }
 

@@ -23,28 +23,26 @@ export class UserProfileComponent implements OnInit {
   skills : ISkills[] =[];
   users: IUser[] = [];
   filterUsers: IUser[] = [];
+  locations : any[] =[];
+  designations : any[]=[];
+  genders : any[]=[];
 
  
-  set listFilter(value: string) {
-    this._listFilter = value;
-    console.log('In Setter:', value)
-    this.filterUsers = this.performFilter(value);
+  // set listFilter(value: string) {
+  //   this._listFilter = value;
+  //   console.log('In Setter:', value)
+  //   this.filterUsers = this.performFilter(value);
     
-  }
+  // }
 
-  performFilter(filterBy: string): IUser[] {
-    filterBy = filterBy.toLocaleLowerCase();
-    return this.users.filter((user: IUser) =>
-      user.name.toLocaleLowerCase().includes(filterBy));
+  // performFilter(filterBy: string): IUser[] {
+  //   filterBy = filterBy.toLocaleLowerCase();
+  //   return this.users.filter((user: IUser) =>
+  //     user.firstName.toLocaleLowerCase().includes(filterBy));
 
-  }
+  // }
 
-  locationOptions = [
-    'Banglore',
-    'Vadodara',
-    'Ahmadabad'
-  ];
-  
+ 
  getForm : FormGroup;
  employeeForm: FormGroup;
 
@@ -60,18 +58,28 @@ export class UserProfileComponent implements OnInit {
   
   ngOnInit(): void {
     this.employeeForm = this.fb.group({
-      name: this.fb.control('',
+      userName: this.fb.control('',
         [Validators.required,
-        Validators.minLength(4),
+        Validators.minLength(5),
+        Validators.pattern("[a-zA-Z].*")]
+      ),
+      firstName: this.fb.control('',
+        [Validators.required,
+        Validators.minLength(3),
+        Validators.pattern("[a-zA-Z].*")]
+      ),
+      lastName: this.fb.control('',
+        [Validators.required,
+        Validators.minLength(3),
         Validators.pattern("[a-zA-Z].*")]
       ),
       email: this.fb.control('',
         [Validators.required,
         Validators.email]
       ),
-      location: this.fb.control('default'),
-      position: this.fb.control(''),
-      gender: this.fb.control('', [Validators.required]),
+      locationId: this.fb.control(0),
+      designationId: this.fb.control(0),
+      genderId: this.fb.control(0),
       pwd: this.fb.control('',
         [Validators.required,
         Validators.minLength(6),
@@ -85,6 +93,9 @@ export class UserProfileComponent implements OnInit {
       pageNumber : this.fb.control(0)
     })
     this.getAllUsers();
+    this.getLocations();
+    this.getDesignations();
+    this.getGenders();
     //this.getAllSkills();
   }
   
@@ -95,9 +106,35 @@ export class UserProfileComponent implements OnInit {
     this.userService.getAllUsers(pageSize,pageNumber)
       .subscribe(
         response => {
-          this.users = response
+          this.users = response;
+          this.clearPageValues();
+
         }
       );
+  }
+
+  getGenders(){
+    this.userService.getGenders().subscribe(
+      response =>{
+        this.genders = response;
+      }
+    )
+  }
+
+  getDesignations(){
+    this.userService.getDesignations().subscribe(
+      response =>{
+        this.designations = response;
+      }
+    )
+  }
+
+  getLocations(){
+    this.userService.getLocations().subscribe(
+      response =>{
+        this.locations = response;
+      }
+    )
   }
 
   // Code for Get All the Skills
@@ -115,12 +152,14 @@ export class UserProfileComponent implements OnInit {
   // Function For the Add User 
   addUser() {
     let user: IUser = {
-      name: this.EmpName.value,
-      email: this.Email.value,
-      location: this.locationOptions[parseInt(this.Location.value)],
-      position: this.Position.value,
-      gender: this.Gender.value,
-      password: this.Password.value,
+      userName: this.UserName.value,
+        firstName : this.FirstName.value,
+        lastName : this.LastName.value,
+        locationId : this.LocationId.value,
+        designationId : this.DesignationId.value,
+        genderId : this.GenderId.value,
+        email : this.Email.value,
+        password : this.Password.value
       //skillId: this.Skill.value
     }
     if (this.Password.value == this.RPassword.value) {
@@ -137,7 +176,7 @@ export class UserProfileComponent implements OnInit {
 
   }
  
-  // Code for the Delete User
+  // // Code for the Delete User
   onDelete(id: any) {
     this.userService.deleteUser(id).subscribe(
       response => {
@@ -158,13 +197,20 @@ export class UserProfileComponent implements OnInit {
 
  //For Clear the form
   clearForm() {
-    this.EmpName.setValue('');
+    this.UserName.setValue('');
+    this.FirstName.setValue('');
+    this.LastName.setValue('');
     this.Email.setValue('');
-    this.Location.setValue('');
-    this.Position.setValue('');
-    this.Gender.setValue('');
+    this.LocationId.setValue(0);
+    this.DesignationId.setValue(0);
+    this.GenderId.setValue(0);
     this.Password.setValue('');
     this.RPassword.setValue('');
+  }
+
+  clearPageValues(){
+    this.PageSize.setValue(0);
+    this.PageNumber.setValue(0);
   }
 
   public get PageSize(): FormControl{
@@ -174,20 +220,27 @@ export class UserProfileComponent implements OnInit {
     return this.getForm.get('pageNumber') as FormControl;
   }
 
-  public get EmpName(): FormControl {
-    return this.employeeForm.get('name') as FormControl;
+  public get UserName(): FormControl {
+    return this.employeeForm.get('userName') as FormControl;
+  }
+
+  public get FirstName(): FormControl {
+    return this.employeeForm.get('firstName') as FormControl;
+  }
+  public get LastName(): FormControl {
+    return this.employeeForm.get('lastName') as FormControl;
   }
   public get Email(): FormControl {
     return this.employeeForm.get('email') as FormControl;
   }
-  public get Location(): FormControl {
-    return this.employeeForm.get('location') as FormControl;
+  public get LocationId(): FormControl {
+    return this.employeeForm.get('locationId') as FormControl;
   }
-  public get Position(): FormControl {
-    return this.employeeForm.get('position') as FormControl;
+  public get DesignationId(): FormControl {
+    return this.employeeForm.get('designationId') as FormControl;
   }
-  public get Gender(): FormControl {
-    return this.employeeForm.get('gender') as FormControl;
+  public get GenderId(): FormControl {
+    return this.employeeForm.get('genderId') as FormControl;
   }
   public get Password(): FormControl {
     return this.employeeForm.get('pwd') as FormControl;
