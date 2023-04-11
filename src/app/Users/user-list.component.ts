@@ -77,9 +77,9 @@ export class UserProfileComponent implements OnInit {
         [Validators.required,
         Validators.email]
       ),
-      locationId: this.fb.control(0),
-      designationId: this.fb.control(0),
-      genderId: this.fb.control(0),
+      locationId: this.fb.control('default'),
+      designationId: this.fb.control('default'),
+      genderId: this.fb.control('default'),
       pwd: this.fb.control('',
         [Validators.required,
         Validators.minLength(6),

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserServiceService } from 'src/app/services/user-service.service';
-import { ISkills } from '../skill';
 
 @Component({
   selector: 'app-skill',
@@ -25,7 +24,7 @@ export class SkillComponent implements OnInit {
   ngOnInit(): void {
 
     this.skillForm = this.fb.group({
-      skillId: this.fb.control(0)
+      skillId: this.fb.control('default')
     })
 
     this.route.paramMap.subscribe({
@@ -34,15 +33,12 @@ export class SkillComponent implements OnInit {
         this.getSkill(id);
       }
     })
-    //this.addSkill();
+    
     this.getAllSkills();
-    //this.getskilltodisplay();
-
-
-
+    
   }
   
-
+//Add the Skill for User
   addSkill() {
     this.route.paramMap.subscribe({
       next: (params) => {
@@ -66,6 +62,8 @@ export class SkillComponent implements OnInit {
 
   }
 
+
+//Get All The SkilllsList
   getAllSkills() {
     this.userService.getAllSkills()
       .subscribe(
@@ -74,6 +72,8 @@ export class SkillComponent implements OnInit {
         }
       );
   }
+
+  //Get The Skill User's Skills
   getSkill(id: any) {
     this.userService.getSkillForUser(id).subscribe(
       response => {
@@ -96,6 +96,7 @@ export class SkillComponent implements OnInit {
     this.router.navigate(['/users']);
   }
 
+  //Delete the User's Skill 
   deleteSkill(skillId: any) {
     this.route.paramMap.subscribe({
       next: (params) => {
