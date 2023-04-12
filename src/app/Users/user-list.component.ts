@@ -168,6 +168,7 @@ export class UserProfileComponent implements OnInit {
           this.users.push(res);
           this.clearForm();
           this.getAllUsers();
+          
         });
     }
     else {
