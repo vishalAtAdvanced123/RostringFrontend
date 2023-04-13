@@ -21,7 +21,8 @@ export class UserUpdateComponent implements OnInit{
   ];
 
 
-  userDetails: IUser = {
+  userDetails:any = {
+        id :0,
         userName: '',
         firstName : '',
         lastName : '',
@@ -69,7 +70,8 @@ export class UserUpdateComponent implements OnInit{
       subscribe({
         next: (response) => {
           this.userDetails = response;
-          this.router.navigate(['/users']);
+          //this.router.navigate(['/users/']);
+          
         }
       });
   }

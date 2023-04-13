@@ -107,7 +107,7 @@ export class UserProfileComponent implements OnInit {
       .subscribe(
         response => {
           this.users = response;
-          this.clearPageValues();
+          //this.clearPageValues();
 
         }
       );
@@ -212,6 +212,7 @@ export class UserProfileComponent implements OnInit {
   clearPageValues(){
     this.PageSize.setValue(0);
     this.PageNumber.setValue(0);
+    this.getAllUsers();
   }
 
   public get PageSize(): FormControl{

@@ -14,18 +14,22 @@
 
 
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h6 class="text-secondary fst-italic">pageSize</h6>
                         <input type="text" class="form-control" placeholder="pageSize" id="pageSize"
                             formControlName="pageSize" />
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h6 class="text-secondary fst-italic">pageNumber</h6>
                         <input type="text" class="form-control" placeholder="pageNumber" id="listFilter"
                             formControlName="pageNumber" />
                     </div>
+                    
                     <div class="col-md-2 mt-4">
                         <button type="button" class="btn btn-primary" (click)="getAllUsers()">Show Result</button>
+                    </div>
+                    <div class="col-md-2 mt-4">
+                        <button type="button" class="btn btn-primary" (click)="clearPageValues()">Clear</button>
                     </div>
 
 
@@ -63,7 +67,7 @@
                         <td>{{user.firstName + ' ' + user.lastName}}</td>
                         <td>{{user.email}}</td>
                         <td>
-                            <a [routerLink]="['/users', user.id ]" [routerLink]="['/user' ,user.id]">
+                            <a [routerLink]="['/user' ,user.id]">
 
                                 <button type="button" class="btn btn-primary">View Details</button>
                             </a>
