@@ -21,6 +21,7 @@ export class UserDetailsComponent implements OnInit {
 
 
   userDetails: IUser = {
+    id: 0,
     userName: '',
     firstName: '',
     lastName: '',

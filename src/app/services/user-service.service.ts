@@ -73,8 +73,8 @@ export class UserServiceService {
   }
 
 
-  updateUser(id :any , user : IUser):Observable<IUser>{
-    return this.http.put<IUser>(this.baseUrl + '/' + id, user);
+  updateUser(id :any , user : any):Observable<any>{
+    return this.http.put<any>(this.baseUrl + '/' + id, user);
   }
 
   //UserSkills
