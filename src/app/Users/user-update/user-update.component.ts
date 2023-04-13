@@ -70,7 +70,7 @@ export class UserUpdateComponent implements OnInit{
       subscribe({
         next: (response) => {
           this.userDetails = response;
-          //this.router.navigate(['/users/']);
+          
           
         }
       });
